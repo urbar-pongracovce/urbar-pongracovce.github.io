@@ -1,0 +1,23 @@
+---
+// Tmavý úvodný pás podstránky — drží kontrast s priesvitnou hlavičkou
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+const { title, subtitle } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-forest-950 pt-32 pb-16 text-cream-50 sm:pt-40 sm:pb-20">
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.06]"
+    style="background-image: radial-gradient(circle at 20% 20%, #d3b165 0, transparent 40%), radial-gradient(circle at 80% 70%, #4d7659 0, transparent 45%);"
+  >
+  </div>
+  <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+    <p class="mb-3 text-xs font-semibold tracking-[0.3em] text-gold-400 uppercase">
+      Urbár Pongrácovce
+    </p>
+    <h1 class="font-display max-w-3xl text-4xl font-semibold text-balance sm:text-5xl">{title}</h1>
+    {subtitle && <p class="mt-4 max-w-2xl text-lg leading-relaxed opacity-85">{subtitle}</p>}
+  </div>
+</section>

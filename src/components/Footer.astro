@@ -1,0 +1,61 @@
+---
+import Emblem from './Emblem.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-forest-950 text-cream-100">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
+    <div>
+      <div class="flex items-center gap-3">
+        <Emblem class="h-12 w-12 text-gold-400" />
+        <div class="leading-tight">
+          <p class="font-display text-lg font-semibold">Urbár Pongrácovce</p>
+          <p class="text-xs tracking-widest uppercase opacity-70">Spravujeme spoločný les</p>
+        </div>
+      </div>
+      <p class="mt-4 max-w-xs text-sm leading-relaxed opacity-80">
+        Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce hospodári na spoločných lesoch
+        a pasienkoch v katastri obce Pongrácovce na Spiši.
+      </p>
+    </div>
+
+    <div class="text-sm">
+      <h2 class="font-display mb-4 text-base font-semibold text-gold-400">Kontakt a údaje</h2>
+      <address class="space-y-1.5 leading-relaxed not-italic opacity-90">
+        <p>Pongrácovce 30, 053 05 Pongrácovce</p>
+        <p>okres Levoča, Prešovský kraj</p>
+        <p>
+          <a class="hover:text-gold-400" href="mailto:urbariat.pongracovce@proton.me"
+            >urbariat.pongracovce@proton.me</a
+          >
+        </p>
+        <p class="pt-2">IČO: 56940980 · DIČ: 2122505627</p>
+        <p>Reg. č. R-040/704, register pozemkových spoločenstiev</p>
+        <p>Okresný úrad Poprad, pozemkový a lesný odbor</p>
+      </address>
+    </div>
+
+    <div class="text-sm">
+      <h2 class="font-display mb-4 text-base font-semibold text-gold-400">Navigácia</h2>
+      <ul class="grid grid-cols-2 gap-x-4 gap-y-2 opacity-90">
+        <li><a class="hover:text-gold-400" href="/o-spolocenstve/">O spoločenstve</a></li>
+        <li><a class="hover:text-gold-400" href="/organy/">Orgány</a></li>
+        <li><a class="hover:text-gold-400" href="/oznamy/">Oznamy</a></li>
+        <li><a class="hover:text-gold-400" href="/galeria/">Galéria</a></li>
+        <li><a class="hover:text-gold-400" href="/dokumenty/">Dokumenty</a></li>
+        <li><a class="hover:text-gold-400" href="/kontakt/">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream-50/10">
+    <div
+      class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs opacity-70 sm:flex-row sm:px-6"
+    >
+      <p>© {year} Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce</p>
+      <p>
+        <a href="/rss.xml" class="hover:text-gold-400">RSS</a>
+      </p>
+    </div>
+  </div>
+</footer>

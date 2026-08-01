@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+// Dokumenty sa nahrávajú do priečinka public/dokumenty/ — tu sa zobrazia automaticky.
+const subory = Object.keys(
+  import.meta.glob('/public/dokumenty/*.{pdf,doc,docx,xls,xlsx,odt}')
+).map((cesta) => {
+  const nazov = cesta.split('/').pop()!;
+  return {
+    url: `/dokumenty/${nazov}`,
+    nazov: nazov
+      .replace(/\.[a-z]+$/i, '')
+      .replaceAll('-', ' ')
+      .replaceAll('_', ' ')
+      .replace(/^./, (c) => c.toUpperCase()),
+    pripona: nazov.split('.').pop()!.toUpperCase(),
+  };
+});
+---
+
+<Base
+  title="Dokumenty"
+  description="Dokumenty Urbárskej spoločnosti pozemkového spoločenstva Pongrácovce na stiahnutie — zmluva o spoločenstve, pozvánky, zápisnice a tlačivá."
+>
+  <PageHero
+    title="Dokumenty"
+    subtitle="Zmluva o spoločenstve, pozvánky, zápisnice zo zhromaždení a tlačivá na stiahnutie."
+  />
+
+  <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:py-20">
+    {
+      subory.length === 0 ? (
+        <div class="reveal rounded-3xl border border-cream-200 bg-white p-10 text-center shadow-sm">
+          <svg
+            class="mx-auto h-12 w-12 text-forest-300"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+            />
+          </svg>
+          <p class="mt-4 font-semibold text-forest-800">Dokumenty pripravujeme</p>
+          <p class="mt-2 text-sm text-forest-600">
+            Zmluva o spoločenstve a ďalšie dokumenty tu budú zverejnené čoskoro. Medzitým nás
+            v prípade potreby <a href="/kontakt/" class="underline underline-offset-4">kontaktujte</a>.
+          </p>
+        </div>
+      ) : (
+        <ul class="space-y-3">
+          {subory.map((s) => (
+            <li>
+              <a
+                href={s.url}
+                download
+                class="reveal group flex items-center gap-4 rounded-2xl border border-cream-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-forest-100 text-xs font-bold text-forest-700">
+                  {s.pripona}
+                </span>
+                <span class="font-medium text-forest-900 group-hover:text-forest-700">{s.nazov}</span>
+                <svg
+                  class="ml-auto h-5 w-5 shrink-0 text-forest-400 transition group-hover:text-gold-600"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                  />
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Base>

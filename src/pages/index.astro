@@ -1,0 +1,214 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import OznamCard from '../components/OznamCard.astro';
+import heroLes from '../assets/foto/hero-les.jpg';
+import hmla from '../assets/foto/hmla.jpg';
+
+const oznamy = (await getCollection('oznamy', ({ data }) => data.zverejnene))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const galeria = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('../assets/galeria/*.{jpg,jpeg,png,webp}', {
+    eager: true,
+  })
+)
+  .sort(([a], [b]) => b.localeCompare(a))
+  .slice(0, 3);
+---
+
+<Base title="Domov">
+  <!-- Hero -->
+  <section class="relative flex min-h-[92vh] items-center justify-center overflow-hidden">
+    <Image
+      src={heroLes}
+      alt="Lesy v okolí Pongrácoviec"
+      class="absolute inset-0 h-full w-full object-cover"
+      widths={[768, 1280, 2000]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-forest-950/70 via-forest-950/45 to-forest-950/85"></div>
+
+    <div class="relative mx-auto max-w-4xl px-4 py-40 text-center text-cream-50">
+      <p class="mb-5 text-xs font-semibold tracking-[0.35em] uppercase text-gold-400">
+        Pozemkové spoločenstvo · Spiš · okres Levoča
+      </p>
+      <h1 class="font-display text-4xl leading-tight font-semibold text-balance sm:text-6xl">
+        Spoločne sa staráme o&nbsp;lesy našich predkov
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed opacity-90">
+        Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce hospodári na spoločných lesoch
+        a&nbsp;pasienkoch v&nbsp;katastri obce Pongrácovce — zodpovedne, trvalo udržateľne
+        a&nbsp;v&nbsp;prospech všetkých podielnikov.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/oznamy/"
+          class="rounded-full bg-gold-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-forest-950 uppercase shadow-lg transition hover:bg-gold-400"
+        >
+          Aktuálne oznamy
+        </a>
+        <a
+          href="/o-spolocenstve/"
+          class="rounded-full border border-cream-50/40 px-7 py-3.5 text-sm font-semibold tracking-wide uppercase backdrop-blur transition hover:bg-cream-50/10"
+        >
+          O spoločenstve
+        </a>
+      </div>
+    </div>
+
+    <a
+      href="#uvod"
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream-50/70 transition hover:text-cream-50"
+      aria-label="Posunúť nižšie"
+    >
+      <svg class="h-8 w-8 animate-bounce" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </a>
+  </section>
+
+  <!-- Čísla -->
+  <section id="uvod" class="border-b border-cream-200 bg-cream-50">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-4 py-14 text-center sm:px-6 lg:grid-cols-4">
+      {
+        [
+          ['1297', 'prvá písomná zmienka o obci'],
+          ['45 %', 'katastra obce pokrývajú lesy'],
+          ['2025', 'vznik pozemkového spoločenstva'],
+          ['R‑040/704', 'registrácia — OÚ Poprad'],
+        ].map(([num, text]) => (
+          <div class="reveal">
+            <p class="font-display text-4xl font-semibold text-forest-800">{num}</p>
+            <p class="mt-2 text-sm text-forest-600">{text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- O nás -->
+  <section class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-28">
+    <div class="reveal relative">
+      <div class="absolute -top-4 -left-4 h-full w-full rounded-3xl border-2 border-gold-400/40"></div>
+      <Image
+        src={hmla}
+        alt="Ranná hmla nad lesom"
+        class="relative aspect-[4/3] w-full rounded-3xl object-cover shadow-xl"
+        widths={[640, 1024, 1600]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+      />
+    </div>
+    <div class="reveal">
+      <p class="mb-3 text-xs font-semibold tracking-[0.3em] text-gold-600 uppercase">Kto sme</p>
+      <h2 class="font-display text-3xl font-semibold text-forest-900 sm:text-4xl">
+        Urbárska tradícia s&nbsp;novou energiou
+      </h2>
+      <p class="mt-5 leading-relaxed text-forest-800">
+        Nadväzujeme na stáročnú urbársku tradíciu obce Pongrácovce, ktorej história siaha až do
+        roku 1297. Ako pozemkové spoločenstvo združujeme vlastníkov podielov spoločnej
+        nehnuteľnosti a&nbsp;spoločne rozhodujeme o&nbsp;starostlivosti o&nbsp;lesy a&nbsp;pasienky
+        v&nbsp;našom chotári.
+      </p>
+      <p class="mt-4 leading-relaxed text-forest-800">
+        Hospodárime podľa zákona č. 97/2013 Z.&nbsp;z. o&nbsp;pozemkových spoločenstvách
+        a&nbsp;programu starostlivosti o&nbsp;lesy — aby náš majetok slúžil aj ďalším generáciám.
+      </p>
+      <a
+        href="/o-spolocenstve/"
+        class="mt-8 inline-flex items-center gap-2 font-semibold text-forest-700 transition hover:text-gold-600"
+      >
+        Viac o spoločenstve
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 6l6 6-6 6M19 12H5"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Oznamy -->
+  <section class="bg-forest-50/60 py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="reveal mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="mb-3 text-xs font-semibold tracking-[0.3em] text-gold-600 uppercase">
+            Aktuality
+          </p>
+          <h2 class="font-display text-3xl font-semibold text-forest-900 sm:text-4xl">
+            Najnovšie oznamy
+          </h2>
+        </div>
+        <a
+          href="/oznamy/"
+          class="rounded-full border border-forest-300 px-6 py-2.5 text-sm font-semibold text-forest-800 transition hover:border-gold-500 hover:text-gold-600"
+        >
+          Všetky oznamy
+        </a>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        {oznamy.map((oznam) => <OznamCard oznam={oznam} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Galéria -->
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-24">
+    <div class="reveal mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="mb-3 text-xs font-semibold tracking-[0.3em] text-gold-600 uppercase">
+          Náš chotár
+        </p>
+        <h2 class="font-display text-3xl font-semibold text-forest-900 sm:text-4xl">Fotogaléria</h2>
+      </div>
+      <a
+        href="/galeria/"
+        class="rounded-full border border-forest-300 px-6 py-2.5 text-sm font-semibold text-forest-800 transition hover:border-gold-500 hover:text-gold-600"
+      >
+        Celá galéria
+      </a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-3">
+      {
+        galeria.map(([path, img]) => (
+          <a href="/galeria/" class="reveal group block overflow-hidden rounded-2xl">
+            <Image
+              src={img.default}
+              alt={path.split('/').pop()?.replace(/\.[a-z]+$/, '').replaceAll('-', ' ') ?? 'Fotografia z chotára'}
+              class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
+              widths={[480, 800]}
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative overflow-hidden bg-forest-950 py-20 text-center text-cream-50">
+    <div
+      class="pointer-events-none absolute inset-0 opacity-[0.07]"
+      style="background-image: radial-gradient(circle at 15% 30%, #d3b165 0, transparent 40%), radial-gradient(circle at 85% 70%, #4d7659 0, transparent 45%);"
+    >
+    </div>
+    <div class="reveal relative mx-auto max-w-2xl px-4">
+      <h2 class="font-display text-3xl font-semibold text-balance sm:text-4xl">
+        Ste vlastníkom podielu alebo dedičom?
+      </h2>
+      <p class="mt-4 leading-relaxed opacity-85">
+        Radi vám pomôžeme s otázkami o podieloch a dedičstve.
+        Ak uvažujete o predaji svojho podielu, spoločenstvo ho od vás odkúpi. Ozvite sa nám.
+      </p>
+      <a
+        href="/kontakt/"
+        class="mt-8 inline-block rounded-full bg-gold-500 px-8 py-3.5 text-sm font-semibold tracking-wide text-forest-950 uppercase shadow-lg transition hover:bg-gold-400"
+      >
+        Kontaktujte nás
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+const vybor = [
+  { meno: 'Jozef Slebodník', funkcia: 'predseda spoločenstva', poznamka: 'štatutárny zástupca' },
+  { meno: 'Ľubomír Bernáth', funkcia: 'podpredseda spoločenstva', poznamka: '' },
+  { meno: 'Ing. Vladimír Iľaš', funkcia: 'člen výboru', poznamka: '' },
+  { meno: 'Maroš Meľuch', funkcia: 'člen výboru', poznamka: '' },
+  { meno: 'Tomáš Meľuch', funkcia: 'člen výboru', poznamka: '' },
+];
+
+const dozorna = [
+  { meno: 'Mgr. Jana Molčanová', funkcia: 'predsedníčka dozornej rady', poznamka: '' },
+  { meno: 'Ing. Mária Berková', funkcia: 'členka dozornej rady', poznamka: '' },
+  { meno: 'Mária Tancošová', funkcia: 'členka dozornej rady', poznamka: '' },
+];
+---
+
+<Base
+  title="Orgány spoločenstva"
+  description="Orgány Urbárskej spoločnosti pozemkového spoločenstva Pongrácovce — zhromaždenie, výbor a dozorná rada."
+>
+  <PageHero
+    title="Orgány spoločenstva"
+    subtitle="Spoločenstvo riadi zhromaždenie ako najvyšší orgán, výbor ako výkonný a štatutárny orgán a dozorná rada ako kontrolný orgán."
+  />
+
+  <section class="mx-auto max-w-6xl space-y-16 px-4 py-16 sm:px-6 lg:py-24">
+    <div class="reveal max-w-3xl">
+      <h2 class="font-display text-3xl font-semibold text-forest-900">Zhromaždenie</h2>
+      <p class="mt-4 leading-relaxed text-forest-800">
+        Najvyšším orgánom spoločenstva je zhromaždenie — tvorí ho každý člen spoločenstva.
+        Rozhoduje o&nbsp;zmluve o&nbsp;spoločenstve, volí výbor a&nbsp;dozornú radu
+        a&nbsp;schvaľuje ročnú účtovnú závierku. Pozvánky na zasadnutia zverejňujeme
+        v&nbsp;časti <a href="/oznamy/" class="font-semibold text-forest-600 underline underline-offset-4 hover:text-gold-600">Oznamy</a>.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="font-display reveal text-3xl font-semibold text-forest-900">Výbor</h2>
+      <p class="reveal mt-3 max-w-3xl leading-relaxed text-forest-800">
+        Výbor je výkonným a&nbsp;štatutárnym orgánom spoločenstva. Funkčné obdobie výboru
+        je 5&nbsp;rokov; súčasný výbor bol zvolený s&nbsp;účinnosťou od 23.&nbsp;apríla&nbsp;2025.
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          vybor.map((clen) => (
+            <div class="reveal rounded-2xl border border-cream-200 bg-white p-6 shadow-sm">
+              <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 text-forest-700">
+                <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.1a7.5 7.5 0 0 1 15 0A17.9 17.9 0 0 1 12 21.75c-2.68 0-5.22-.58-7.5-1.64Z"
+                  />
+                </svg>
+              </div>
+              <p class="font-display text-lg font-semibold text-forest-900">{clen.meno}</p>
+              <p class="text-sm text-gold-600">{clen.funkcia}</p>
+              {clen.poznamka && <p class="mt-1 text-xs text-forest-500">{clen.poznamka}</p>}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div>
+      <h2 class="font-display reveal text-3xl font-semibold text-forest-900">Dozorná rada</h2>
+      <p class="reveal mt-3 max-w-3xl leading-relaxed text-forest-800">
+        Dozorná rada kontroluje činnosť spoločenstva a&nbsp;prerokúva sťažnosti členov.
+        Za svoju činnosť zodpovedá zhromaždeniu. Funkčné obdobie dozornej rady je 5&nbsp;rokov;
+        súčasná dozorná rada pôsobí od 23.&nbsp;apríla&nbsp;2025.
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          dozorna.map((clen) => (
+            <div class="reveal rounded-2xl border border-cream-200 bg-white p-6 shadow-sm">
+              <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gold-400/15 text-gold-600">
+                <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.96 11.96 0 0 1 3.6 6c-.27.797-.6 2.137-.6 3.75 0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.613-.33-2.953-.6-3.75a11.96 11.96 0 0 1-8.4-3.286Z"
+                  />
+                </svg>
+              </div>
+              <p class="font-display text-lg font-semibold text-forest-900">{clen.meno}</p>
+              <p class="text-sm text-gold-600">{clen.funkcia}</p>
+              {clen.poznamka && <p class="mt-1 text-xs text-forest-500">{clen.poznamka}</p>}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="reveal max-w-3xl">
+      <h2 class="font-display text-3xl font-semibold text-forest-900">Konanie za spoločenstvo</h2>
+      <p class="mt-4 leading-relaxed text-forest-800">
+        V&nbsp;mene spoločenstva koná navonok a&nbsp;pred štátnymi orgánmi
+        <strong>predseda spoločenstva Jozef Slebodník</strong> — v&nbsp;súlade so zmluvou
+        o&nbsp;spoločenstve a&nbsp;stanovami spoločenstva zo dňa 15.&nbsp;februára&nbsp;2025.
+        V&nbsp;neprítomnosti predsedu koná v&nbsp;mene spoločenstva
+        <strong>podpredseda spoločenstva Ľubomír Bernáth</strong>.
+      </p>
+      <p class="mt-4 text-sm leading-relaxed text-forest-600">
+        Spoločenstvo je zapísané v&nbsp;registri pozemkových spoločenstiev pod vložkou
+        č.&nbsp;R-040/704 od 23.&nbsp;apríla&nbsp;2025.
+      </p>
+    </div>
+  </section>
+</Base>

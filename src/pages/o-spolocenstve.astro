@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import drevo from '../assets/foto/drevo.jpg';
+
+const udaje = [
+  ['Oficiálny názov', 'Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce'],
+  ['Sídlo', 'Pongrácovce 30, 053 05 Pongrácovce'],
+  ['IČO', '56940980'],
+  ['DIČ', '2122505627'],
+  ['Právna forma', 'Pozemkové spoločenstvo (zákon č. 97/2013 Z. z.)'],
+  ['Dátum vzniku', '23. apríl 2025'],
+  ['Registrácia', 'Register pozemkových spoločenstiev, vložka č. R-040/704'],
+  ['Registrový orgán', 'Okresný úrad Poprad, pozemkový a lesný odbor'],
+  ['Predmet činnosti', 'Lesné hospodárstvo a ostatné služby v lesníctve (SK NACE 0210)'],
+  ['Katastrálne územie', 'Pongrácovce (č. 848131)'],
+  ['Funkčné obdobie orgánov', 'výbor 5 rokov · dozorná rada 5 rokov'],
+];
+---
+
+<Base
+  title="O spoločenstve"
+  description="História a poslanie Urbárskej spoločnosti pozemkového spoločenstva Pongrácovce — urbárska tradícia obce od roku 1297, oficiálne údaje a hospodárenie."
+>
+  <PageHero
+    title="O spoločenstve"
+    subtitle="Sme spoločenstvom vlastníkov spoločnej nehnuteľnosti v katastri obce Pongrácovce. Hospodárime na lesoch a pasienkoch, ktoré naši predkovia spravovali po stáročia."
+  />
+
+  <section class="mx-auto grid max-w-6xl items-start gap-12 px-4 py-16 sm:px-6 lg:grid-cols-5 lg:py-24">
+    <div class="reveal space-y-5 leading-relaxed text-forest-800 lg:col-span-3">
+      <h2 class="font-display text-3xl font-semibold text-forest-900">Naše poslanie</h2>
+      <p>
+        Poslaním spoločenstva je spoločne, odborne a&nbsp;transparentne spravovať spoločnú
+        nehnuteľnosť — lesné pozemky a&nbsp;pasienky v&nbsp;katastrálnom území Pongrácovce.
+        Časť prostriedkov z&nbsp;hospodárenia vraciame späť do obnovy lesa, výsadby
+        a&nbsp;ochrany prírody.
+      </p>
+      <p>
+        Riadime sa zákonom č.&nbsp;97/2013 Z.&nbsp;z. o&nbsp;pozemkových spoločenstvách,
+        zmluvou o&nbsp;spoločenstve a&nbsp;programom starostlivosti o&nbsp;lesy. Najvyšším
+        orgánom je zhromaždenie všetkých členov, ktoré rozhoduje o&nbsp;zásadných otázkach
+        hospodárenia.
+      </p>
+
+      <h2 class="font-display pt-6 text-3xl font-semibold text-forest-900">Z histórie</h2>
+      <p>
+        Obec Pongrácovce sa prvýkrát písomne spomína v&nbsp;roku <strong>1297</strong>. Leží
+        v&nbsp;nadmorskej výške 538&nbsp;m na Spiši, neďaleko Spišského Podhradia, v&nbsp;okrese
+        Levoča. Lesy dnes pokrývajú približne 45&nbsp;% katastra obce.
+      </p>
+      <p>
+        Urbárske spoločenstvá na Slovensku majú korene ešte v&nbsp;stredoveku — spoločné
+        užívanie lesov a&nbsp;pasienkov bolo po stáročia základom života spišských obcí.
+        Po prerušení v&nbsp;časoch kolektivizácie sa urbárska tradícia obnovila a&nbsp;naše
+        spoločenstvo na ňu oficiálne nadviazalo registráciou v&nbsp;apríli 2025.
+      </p>
+
+      <h2 class="font-display pt-6 text-3xl font-semibold text-forest-900">Ako hospodárime</h2>
+      <ul class="list-disc space-y-2 pl-6">
+        <li>obnova a výchova lesných porastov, starostlivosť o mladiny,</li>
+        <li>plánovaná ťažba dreva podľa programu starostlivosti o lesy,</li>
+        <li>ochrana lesa pred škodcami a klimatickými vplyvmi,</li>
+        <li>údržba pasienkov a spoločných pozemkov,</li>
+        <li>vedenie evidencie podielov členov spoločenstva.</li>
+      </ul>
+
+      <div class="reveal mt-10 rounded-3xl border border-gold-400/40 bg-gold-400/10 p-7">
+        <h2 class="font-display text-2xl font-semibold text-forest-900">
+          Chcete predať svoj podiel?
+        </h2>
+        <p class="mt-3">
+          Ak ste členom spoločenstva a&nbsp;uvažujete o&nbsp;predaji svojho podielu,
+          <strong>spoločenstvo ho od vás odkúpi</strong>. Ozvite sa nám — dohodneme sa na
+          podmienkach a&nbsp;pomôžeme vám s&nbsp;celým postupom prevodu.
+        </p>
+        <a
+          href="/kontakt/"
+          class="mt-5 inline-block rounded-full bg-forest-800 px-7 py-3 text-sm font-semibold tracking-wide text-cream-50 uppercase transition hover:bg-forest-700"
+        >
+          Kontaktujte nás
+        </a>
+      </div>
+    </div>
+
+    <aside class="space-y-8 lg:col-span-2">
+      <div class="reveal overflow-hidden rounded-3xl shadow-xl">
+        <Image
+          src={drevo}
+          alt="Hospodárenie v lese"
+          class="aspect-[4/3] w-full object-cover"
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+        />
+      </div>
+      <div class="reveal rounded-3xl border border-cream-200 bg-white p-7 shadow-sm">
+        <h2 class="font-display mb-5 text-xl font-semibold text-forest-900">Oficiálne údaje</h2>
+        <dl class="space-y-3 text-sm">
+          {
+            udaje.map(([k, v]) => (
+              <div>
+                <dt class="font-semibold tracking-wide text-forest-500 uppercase text-[0.7rem]">
+                  {k}
+                </dt>
+                <dd class="text-forest-900">{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </aside>
+  </section>
+</Base>

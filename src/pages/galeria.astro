@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+const fotky = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('../assets/galeria/*.{jpg,jpeg,png,webp}', {
+    eager: true,
+  })
+).sort(([a], [b]) => b.localeCompare(a));
+
+const POPISKY: Record<string, string> = {
+  '2025-vysadba-stromcekov': 'Výsadba mladých stromčekov (november 2025)',
+  '2025-pri-vysadbe': 'Pri výsadbe stromčekov (november 2025)',
+  '2025-plocha-po-tazbe': 'Vyčistená plocha po ťažbe (november 2025)',
+};
+
+const popis = (path: string) => {
+  const nazov = path
+    .split('/')
+    .pop()!
+    .replace(/\.[a-z]+$/i, '');
+  return (
+    POPISKY[nazov] ??
+    nazov
+      .replace(/^\d{4}-?/, '')
+      .replaceAll('-', ' ')
+      .replace(/^./, (c) => c.toUpperCase())
+  );
+};
+---
+
+<Base
+  title="Fotogaléria"
+  description="Fotografie z chotára obce Pongrácovce — lesy, pasienky a práca Urbárskej spoločnosti pozemkového spoločenstva Pongrácovce."
+>
+  <PageHero
+    title="Fotogaléria"
+    subtitle="Náš chotár v priebehu roka — lesy, pasienky a spoločná práca."
+  />
+
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">
+    {
+      fotky.length === 0 ? (
+        <p class="py-20 text-center text-forest-600">Galéria sa pripravuje.</p>
+      ) : (
+        <div class="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+          {fotky.map(([path, img]) => (
+            <figure class="reveal group overflow-hidden rounded-2xl bg-forest-100 shadow-sm break-inside-avoid">
+              <Image
+                src={img.default}
+                alt={popis(path)}
+                class="w-full object-cover transition duration-500 group-hover:scale-105"
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+              <figcaption class="px-4 py-3 text-sm text-forest-700">{popis(path)}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )
+    }
+  </section>
+</Base>

@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import OznamCard from '../../components/OznamCard.astro';
+import { KATEGORIE } from '../../lib/oznamy';
+
+const oznamy = (await getCollection('oznamy', ({ data }) => data.zverejnene)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base
+  title="Oznamy"
+  description="Aktuálne oznamy, pozvánky na zhromaždenia a zápisnice Urbárskej spoločnosti pozemkového spoločenstva Pongrácovce."
+>
+  <PageHero
+    title="Oznamy a aktuality"
+    subtitle="Pozvánky na zhromaždenia, zápisnice a všetky dôležité informácie pre členov spoločenstva na jednom mieste."
+  />
+
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">
+    <div class="mb-10 flex flex-wrap gap-2" role="group" aria-label="Filter podľa kategórie">
+      <button
+        class="filter-btn rounded-full border border-forest-800 bg-forest-800 px-5 py-2 text-sm font-semibold text-cream-50 transition"
+        data-filter="vsetky"
+      >
+        Všetky
+      </button>
+      {
+        Object.entries(KATEGORIE).map(([key, kat]) => (
+          <button
+            class="filter-btn rounded-full border border-forest-300 px-5 py-2 text-sm font-semibold text-forest-800 transition hover:border-forest-800"
+            data-filter={key}
+          >
+            {kat.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        oznamy.map((oznam) => (
+          <div data-kategoria={oznam.data.kategoria} class="oznam-item">
+            <OznamCard oznam={oznam} />
+          </div>
+        ))
+      }
+    </div>
+
+    <p id="ziadne" class="hidden py-16 text-center text-forest-600">
+      V tejto kategórii zatiaľ nie sú žiadne oznamy.
+    </p>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const items = document.querySelectorAll<HTMLElement>('.oznam-item');
+    const empty = document.getElementById('ziadne');
+    const active = ['bg-forest-800', 'text-cream-50', 'border-forest-800'];
+    const inactive = ['border-forest-300', 'text-forest-800'];
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => {
+          b.classList.remove(...active);
+          b.classList.add(...inactive);
+        });
+        btn.classList.add(...active);
+        btn.classList.remove(...inactive);
+
+        const filter = btn.dataset.filter;
+        let shown = 0;
+        items.forEach((item) => {
+          const show = filter === 'vsetky' || item.dataset.kategoria === filter;
+          item.classList.toggle('hidden', !show);
+          if (show) shown++;
+        });
+        empty?.classList.toggle('hidden', shown > 0);
+      });
+    });
+  </script>
+</Base>

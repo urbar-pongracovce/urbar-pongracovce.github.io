@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+const REPO = 'https://github.com/urbar-pongracovce/urbar-pongracovce.github.io';
+
+const sablona = `---
+title: "Názov oznamu"
+date: ${new Date().toISOString().slice(0, 10)}
+kategoria: oznam
+popis: "Krátke zhrnutie oznamu do jednej-dvoch viet."
+---
+
+Sem napíšte text oznamu. Môžete použiť **tučné písmo**, zoznamy aj nadpisy.
+`;
+
+const novyOznamUrl = `${REPO}/new/main/src/content/oznamy?value=${encodeURIComponent(sablona)}`;
+
+const akcie = [
+  {
+    nazov: 'Pridať oznam',
+    popis:
+      'Otvorí sa formulár s pripravenou šablónou. Hore zadajte názov súboru (napr. 2026-08-15-pozvanka-na-zhromazdenie.md), upravte text a kliknite na zelené „Commit changes“. Ak do hlavičky pridáte riadok „zverejnene: false“, oznam ostane skrytý ako koncept.',
+    url: novyOznamUrl,
+    ikona: 'M12 4.5v15m7.5-7.5h-15',
+  },
+  {
+    nazov: 'Nahrať fotky do galérie',
+    popis:
+      'Pretiahnite fotky (JPG/PNG) do okna a potvrďte „Commit changes“. Na stránke galérie sa zobrazia automaticky. Názov súboru = popis fotky, napr. 2026-vysadba-mladiny.jpg.',
+    url: `${REPO}/upload/main/src/assets/galeria`,
+    ikona:
+      'M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z',
+  },
+  {
+    nazov: 'Nahrať dokument (PDF)',
+    popis:
+      'Pretiahnite PDF do okna a potvrďte. Dokument sa automaticky objaví na stránke Dokumenty. Názov súboru = názov dokumentu, napr. zmluva-o-spolocenstve.pdf.',
+    url: `${REPO}/upload/main/public/dokumenty`,
+    ikona:
+      'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12H9m5.25 3H9m10.5-9.75h-3.375c-.621 0-1.125-.504-1.125-1.125V1.5',
+  },
+  {
+    nazov: 'Upraviť existujúce oznamy',
+    popis: 'Zoznam všetkých oznamov — kliknite na súbor a potom na ceruzku (Edit).',
+    url: `${REPO}/tree/main/src/content/oznamy`,
+    ikona:
+      'M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897l12.682-12.68z',
+  },
+];
+---
+
+<Base title="Správa obsahu" description="Interná stránka na správu obsahu webu.">
+  <PageHero
+    title="Správa obsahu"
+    subtitle="Pridávanie oznamov, fotiek a dokumentov. Potrebujete byť prihlásení do účtu urbar-pongracovce na GitHube. Po uložení sa web sám obnoví do jednej minúty."
+  />
+
+  <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:py-20">
+    <div class="grid gap-6 sm:grid-cols-2">
+      {
+        akcie.map((akcia) => (
+          <a
+            href={akcia.url}
+            target="_blank"
+            rel="noopener"
+            class="reveal group rounded-3xl border border-cream-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-forest-100 text-forest-700 transition group-hover:bg-gold-400/20 group-hover:text-gold-600">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d={akcia.ikona} />
+              </svg>
+            </span>
+            <h2 class="font-display text-xl font-semibold text-forest-900">{akcia.nazov}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-forest-700">{akcia.popis}</p>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="reveal mt-10 rounded-3xl bg-forest-50 p-7 text-sm leading-relaxed text-forest-800">
+      <h2 class="font-display mb-2 text-lg font-semibold text-forest-900">Ako to funguje?</h2>
+      <p>
+        Obsah webu je uložený na GitHube. Každá zmena (nový oznam, fotka, dokument) sa po
+        potvrdení tlačidlom <strong>„Commit changes“</strong> automaticky spracuje a do
+        minúty je živá na webe. Podrobný postup s obrázkami nájdete v súbore
+        <a
+          href={`${REPO}/blob/main/NAVOD.md`}
+          class="font-semibold underline underline-offset-4"
+          target="_blank"
+          rel="noopener">NAVOD.md</a
+        >.
+      </p>
+    </div>
+  </section>
+</Base>

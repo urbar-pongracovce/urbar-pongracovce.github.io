@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Playfair Display Variable', Georgia, serif;
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+
+  --color-forest-50: #f2f6f2;
+  --color-forest-100: #dfe9e0;
+  --color-forest-200: #bfd3c3;
+  --color-forest-300: #96b59e;
+  --color-forest-400: #6b9377;
+  --color-forest-500: #4d7659;
+  --color-forest-600: #3a5d45;
+  --color-forest-700: #2f4b39;
+  --color-forest-800: #263d2f;
+  --color-forest-900: #1c2f24;
+  --color-forest-950: #0f1d15;
+
+  --color-cream-50: #fdfcf8;
+  --color-cream-100: #f7f4ec;
+  --color-cream-200: #efe9da;
+
+  --color-gold-400: #d3b165;
+  --color-gold-500: #c19a3f;
+  --color-gold-600: #a5812e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream-50);
+  color: var(--color-forest-950);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scroll-reveal animácie */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Typografia článkov (oznamy) */
+.prose-oznam {
+  line-height: 1.75;
+}
+.prose-oznam h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 2rem 0 0.75rem;
+  color: var(--color-forest-800);
+}
+.prose-oznam h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--color-forest-800);
+}
+.prose-oznam p {
+  margin: 1rem 0;
+}
+.prose-oznam ul,
+.prose-oznam ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.prose-oznam ul {
+  list-style: disc;
+}
+.prose-oznam ol {
+  list-style: decimal;
+}
+.prose-oznam li {
+  margin: 0.35rem 0;
+}
+.prose-oznam a {
+  color: var(--color-forest-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-oznam a:hover {
+  color: var(--color-gold-600);
+}
+.prose-oznam strong {
+  color: var(--color-forest-900);
+}
+.prose-oznam blockquote {
+  border-left: 3px solid var(--color-gold-500);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--color-forest-700);
+  margin: 1.25rem 0;
+}
+.prose-oznam table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+}
+.prose-oznam th,
+.prose-oznam td {
+  border: 1px solid var(--color-cream-200);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose-oznam th {
+  background: var(--color-cream-100);
+  font-weight: 600;
+}

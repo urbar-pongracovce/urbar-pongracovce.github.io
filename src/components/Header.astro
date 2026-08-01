@@ -1,0 +1,111 @@
+---
+import Emblem from './Emblem.astro';
+
+const nav = [
+  { href: '/', label: 'Domov' },
+  { href: '/o-spolocenstve/', label: 'O spoločenstve' },
+  { href: '/organy/', label: 'Orgány' },
+  { href: '/oznamy/', label: 'Oznamy' },
+  { href: '/galeria/', label: 'Galéria' },
+  { href: '/dokumenty/', label: 'Dokumenty' },
+  { href: '/kontakt/', label: 'Kontakt' },
+];
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+    <a href="/" class="flex items-center gap-3 text-cream-50">
+      <Emblem class="h-11 w-11 text-gold-400" />
+      <span class="leading-tight">
+        <span class="font-display block text-lg font-semibold tracking-wide">Urbár Pongrácovce</span>
+        <span class="block text-[0.65rem] tracking-[0.2em] uppercase opacity-80"
+          >Urbárska spoločnosť pozemkové spoločenstvo</span
+        >
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Hlavná navigácia">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap text-cream-50/90 transition hover:bg-cream-50/10 hover:text-white',
+              isActive(item.href) && 'bg-cream-50/15 text-white',
+            ]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <button
+      id="menu-toggle"
+      class="rounded-md p-2 text-cream-50 lg:hidden"
+      aria-label="Otvoriť menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-cream-50/10 bg-forest-950/95 backdrop-blur lg:hidden"
+    aria-label="Mobilná navigácia"
+  >
+    <div class="mx-auto max-w-6xl space-y-1 px-4 py-4">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'block rounded-lg px-4 py-3 text-base font-medium text-cream-50/90 hover:bg-cream-50/10',
+              isActive(item.href) && 'bg-cream-50/15 text-white',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  const onScroll = () => {
+    if (window.scrollY > 24) {
+      header?.classList.add('bg-forest-950/90', 'shadow-lg', 'backdrop-blur');
+    } else if (menu?.classList.contains('hidden')) {
+      header?.classList.remove('bg-forest-950/90', 'shadow-lg', 'backdrop-blur');
+    }
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+    if (open) {
+      header?.classList.add('bg-forest-950/90', 'shadow-lg', 'backdrop-blur');
+    } else {
+      onScroll();
+    }
+  });
+</script>

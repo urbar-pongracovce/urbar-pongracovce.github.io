@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { KATEGORIE, formatDate } from '../lib/oznamy';
+
+interface Props {
+  oznam: CollectionEntry<'oznamy'>;
+}
+const { oznam } = Astro.props;
+const kat = KATEGORIE[oznam.data.kategoria];
+---
+
+<article
+  class="group reveal relative flex h-full flex-col rounded-2xl border border-cream-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+>
+  <div class="mb-3 flex items-center gap-3 text-xs">
+    <span
+      class:list={['rounded-full px-3 py-1 font-semibold tracking-wide uppercase', kat.badge]}
+    >
+      {kat.label}
+    </span>
+    <time datetime={oznam.data.date.toISOString()} class="text-forest-600">
+      {formatDate(oznam.data.date)}
+    </time>
+  </div>
+  <h3 class="font-display text-xl leading-snug font-semibold text-forest-900">
+    <a href={`/oznamy/${oznam.id}/`} class="after:absolute after:inset-0">
+      {oznam.data.title}
+    </a>
+  </h3>
+  {
+    oznam.data.popis && (
+      <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-forest-700">{oznam.data.popis}</p>
+    )
+  }
+  <span
+    class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-medium text-forest-600 transition group-hover:text-gold-600"
+  >
+    Čítať viac
+    <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13 6l6 6-6 6M19 12H5"></path>
+    </svg>
+  </span>
+</article>

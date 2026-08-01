@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Emblem from '../components/Emblem.astro';
+---
+
+<Base title="Stránka sa nenašla">
+  <section class="flex min-h-screen flex-col items-center justify-center bg-forest-950 px-4 text-center text-cream-50">
+    <Emblem class="h-20 w-20 text-gold-400" />
+    <h1 class="font-display mt-8 text-5xl font-semibold">404</h1>
+    <p class="mt-4 max-w-md leading-relaxed opacity-85">
+      Táto stránka sa stratila niekde v lese. Skúste sa vrátiť na domovskú stránku.
+    </p>
+    <a
+      href="/"
+      class="mt-8 rounded-full bg-gold-500 px-8 py-3.5 text-sm font-semibold tracking-wide text-forest-950 uppercase transition hover:bg-gold-400"
+    >
+      Späť domov
+    </a>
+  </section>
+</Base>

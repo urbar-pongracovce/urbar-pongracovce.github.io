@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { KATEGORIE, formatDate } from '../../lib/oznamy';
+
+export async function getStaticPaths() {
+  const oznamy = await getCollection('oznamy', ({ data }) => data.zverejnene);
+  return oznamy.map((oznam) => ({
+    params: { slug: oznam.id },
+    props: { oznam },
+  }));
+}
+
+const { oznam } = Astro.props;
+const { Content } = await render(oznam);
+const kat = KATEGORIE[oznam.data.kategoria];
+---
+
+<Base title={oznam.data.title} description={oznam.data.popis}>
+  <PageHero title={oznam.data.title} />
+
+  <article class="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:py-20">
+    <div class="mb-8 flex flex-wrap items-center gap-3 text-sm">
+      <span class:list={['rounded-full px-3 py-1 text-xs font-semibold tracking-wide uppercase', kat.badge]}>
+        {kat.label}
+      </span>
+      <time datetime={oznam.data.date.toISOString()} class="text-forest-600">
+        Zverejnené {formatDate(oznam.data.date)}
+      </time>
+    </div>
+
+    <div class="prose-oznam text-forest-900">
+      <Content />
+    </div>
+
+    {
+      oznam.data.priloha && (
+        <a
+          href={oznam.data.priloha}
+          class="mt-10 inline-flex items-center gap-2 rounded-full bg-forest-800 px-6 py-3 text-sm font-semibold text-cream-50 transition hover:bg-forest-700"
+          download
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+            />
+          </svg>
+          Stiahnuť prílohu
+        </a>
+      )
+    }
+
+    <div class="mt-14 border-t border-cream-200 pt-8">
+      <a
+        href="/oznamy/"
+        class="inline-flex items-center gap-2 font-semibold text-forest-700 transition hover:text-gold-600"
+      >
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11 18l-6-6 6-6M5 12h14"></path>
+        </svg>
+        Späť na všetky oznamy
+      </a>
+    </div>
+  </article>
+</Base>
