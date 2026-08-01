@@ -43,6 +43,12 @@ const fullTitle =
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="sk_SK" />
     <meta property="og:image" content={new URL('og.jpg', Astro.site)} />
+    <!-- Cloudflare Web Analytics -->
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "b6f8e8a5b1734b6a9d26c43b190e926b"}'></script>
   </head>
   <body class="flex min-h-screen flex-col">
     <Header />
