@@ -32,6 +32,21 @@ const galeria = Object.entries(
       fetchpriority="high"
     />
     <div class="absolute inset-0 bg-gradient-to-b from-forest-950/75 via-forest-950/55 to-forest-950/85"></div>
+    <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div class="slnko">
+        <div class="ziara"></div>
+        <div class="opar"></div>
+        <div class="luc" style="--uhol: -18deg; --sirka: 2rem; --jas: 0.4; --trvanie: 12s;"></div>
+        <div class="luc" style="--uhol: -10deg; --sirka: 3.5rem; --jas: 0.55; --trvanie: 6.5s; animation-delay: -3s;"></div>
+        <div class="luc" style="--uhol: -3deg; --sirka: 2rem; --jas: 0.45; --trvanie: 4s; animation-delay: -2s;"></div>
+        <div class="luc" style="--uhol: 6deg; --sirka: 3rem; --jas: 0.6; --trvanie: 5s; animation-delay: -4.5s;"></div>
+        <div class="luc" style="--uhol: 15deg; --sirka: 2.25rem; --jas: 0.36; --trvanie: 12s; animation-delay: -12s;"></div>
+        <div class="luc obcasny" style="--uhol: 24deg; --sirka: 1.5rem; --trvanie: 19s;"></div>
+        <div class="luc obcasny" style="--uhol: -26deg; --sirka: 1.5rem; --trvanie: 29s; animation-delay: -11s;"></div>
+        <div class="luc presun presun-doprava" style="--sirka: 1.75rem;"></div>
+        <div class="luc presun presun-dolava" style="--sirka: 1.5rem;"></div>
+      </div>
+    </div>
 
     <div class="relative mx-auto max-w-4xl px-4 py-40 text-center text-cream-50">
       <p class="mb-5 text-xs font-semibold tracking-[0.35em] uppercase text-gold-400 [text-shadow:0_1px_8px_rgba(6,18,11,0.9)]">
@@ -213,3 +228,212 @@ const galeria = Object.entries(
     </div>
   </section>
 </Base>
+
+<style>
+  /* Slnečné lúče prenikajúce spomedzi konárov — vejár z jedného bodu hore */
+  .slnko {
+    position: absolute;
+    top: -1%;
+    left: 40%;
+    width: 0;
+    height: 0;
+    animation:
+      nahyb 24s ease-in-out infinite alternate,
+      tienenie 17s ease-in-out infinite;
+  }
+  /* konáre prekryjú slnko — dvakrát v cykle zhasne úplne */
+  @keyframes tienenie {
+    0%,
+    22% {
+      opacity: 1;
+    }
+    29% {
+      opacity: 0.03;
+    }
+    37% {
+      opacity: 1;
+    }
+    56% {
+      opacity: 0.8;
+    }
+    64% {
+      opacity: 0.03;
+    }
+    73% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  /* celý zväzok sa pomaly nakláňa ako koruny vo vetre */
+  @keyframes nahyb {
+    from {
+      transform: rotate(-7deg);
+    }
+    to {
+      transform: rotate(7deg);
+    }
+  }
+  .ziara {
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    width: 4rem;
+    height: 4rem;
+    background: radial-gradient(circle, rgba(250, 236, 190, 0.28), transparent 55%);
+    filter: blur(8px);
+    mix-blend-mode: screen;
+    animation: pulz-ziara 5s ease-in-out infinite alternate;
+  }
+  .luc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--sirka);
+    height: 120vh;
+    margin-left: calc(var(--sirka) / -2);
+    transform-origin: top center;
+    transform: rotate(var(--uhol));
+    background: linear-gradient(
+      to bottom,
+      rgba(250, 236, 190, 0.75),
+      rgba(250, 236, 190, 0.35) 45%,
+      transparent 78%
+    );
+    filter: blur(18px);
+    mix-blend-mode: screen;
+    animation: pulz-luc var(--trvanie) ease-in-out infinite alternate;
+  }
+  /* Široký mäkký opar, ktorý spája lúče do jedného zväzku svetla */
+  .opar {
+    position: absolute;
+    top: 0;
+    left: -7rem;
+    width: 14rem;
+    height: 110vh;
+    transform-origin: top center;
+    transform: rotate(-2deg);
+    background: linear-gradient(
+      to bottom,
+      rgba(250, 236, 190, 0.35),
+      rgba(250, 236, 190, 0.12) 50%,
+      transparent 80%
+    );
+    filter: blur(42px);
+    mix-blend-mode: screen;
+    animation: pulz-opar 9s ease-in-out infinite alternate;
+  }
+  @keyframes pulz-opar {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pulz-luc {
+    from {
+      opacity: 0.15;
+      transform: rotate(calc(var(--uhol) - 2.5deg));
+    }
+    to {
+      opacity: var(--jas, 0.8);
+      transform: rotate(calc(var(--uhol) + 2.5deg));
+    }
+  }
+  /* po znovurozsvietení slnka prejde lúč postupne cez obraz */
+  .presun {
+    height: 150vh;
+    animation-duration: 17s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .presun-doprava {
+    animation-name: presun-doprava;
+  }
+  .presun-dolava {
+    animation-name: presun-dolava;
+  }
+  /* doprava z pohľadu diváka = záporná rotácia; po prvom rozsvietení */
+  @keyframes presun-doprava {
+    0%,
+    39% {
+      opacity: 0;
+      transform: rotate(-24deg);
+    }
+    45% {
+      opacity: 0.65;
+    }
+    57%,
+    100% {
+      opacity: 0;
+      transform: rotate(-50deg);
+    }
+  }
+  /* slabší doľava po druhom rozsvietení */
+  @keyframes presun-dolava {
+    0%,
+    76% {
+      opacity: 0;
+      transform: rotate(26deg);
+    }
+    82% {
+      opacity: 0.45;
+    }
+    92%,
+    100% {
+      opacity: 0;
+      transform: rotate(48deg);
+    }
+  }
+  /* občasný lúč na okraji zväzku — väčšinu času neviditeľný */
+  .obcasny {
+    animation-name: obcasny-luc;
+    animation-direction: normal;
+  }
+  @keyframes obcasny-luc {
+    0%,
+    58% {
+      opacity: 0;
+      transform: rotate(calc(var(--uhol) - 1.5deg));
+    }
+    68% {
+      opacity: 0.35;
+    }
+    78%,
+    100% {
+      opacity: 0;
+      transform: rotate(calc(var(--uhol) + 1.5deg));
+    }
+  }
+  @keyframes pulz-ziara {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  /* Mobil: zdroj do medzery medzi logom a tlačidlom menu, jemnejšia intenzita hore */
+  @media (max-width: 1023px) {
+    .slnko {
+      left: 72%;
+      opacity: 0.75;
+    }
+    .ziara {
+      width: 3rem;
+      height: 3rem;
+      top: -1.5rem;
+      left: -1.5rem;
+      background: radial-gradient(circle, rgba(250, 236, 190, 0.35), transparent 55%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .luc,
+    .ziara {
+      animation: none;
+      opacity: 0.35;
+    }
+  }
+</style>
