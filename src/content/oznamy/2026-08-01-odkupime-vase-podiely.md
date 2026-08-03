@@ -1,5 +1,5 @@
 ---
-title: "Odkúpime podiely a pozemky v katastri Pongrácoviec"
+title: "Odkúpime podiely a pozemky v katastri obce Pongrácovce"
 date: 2026-08-01
 kategoria: oznam
 popis: "Spoločenstvo odkúpi podiely spoločnej nehnuteľnosti aj súkromné lesné a poľnohospodárske pozemky v katastrálnom území Pongrácovce. Členstvo nie je podmienkou."
