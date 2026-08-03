@@ -10,16 +10,16 @@ const fotky = Object.entries(
 ).sort(([a], [b]) => b.localeCompare(a));
 
 const POPISKY: Record<string, string> = {
+  '2026-rok-po-vysadbe': 'Rok po výsadbe (august 2026)',
   '2025-vysadba-stromcekov': 'Výsadba mladých stromčekov (november 2025)',
   '2025-pri-vysadbe': 'Pri výsadbe stromčekov (november 2025)',
   '2025-plocha-po-tazbe': 'Vyčistená plocha po ťažbe (november 2025)',
 };
 
+const nazovSuboru = (path: string) => path.split('/').pop()!.replace(/\.[a-z]+$/i, '');
+
 const popis = (path: string) => {
-  const nazov = path
-    .split('/')
-    .pop()!
-    .replace(/\.[a-z]+$/i, '');
+  const nazov = nazovSuboru(path);
   return (
     POPISKY[nazov] ??
     nazov
@@ -28,6 +28,10 @@ const popis = (path: string) => {
       .replace(/^./, (c) => c.toUpperCase())
   );
 };
+
+const rok = (path: string) => nazovSuboru(path).match(/^(\d{4})/)?.[1] ?? 'Staršie';
+
+const roky = [...new Set(fotky.map(([path]) => rok(path)))];
 ---
 
 <Base
@@ -44,21 +48,88 @@ const popis = (path: string) => {
       fotky.length === 0 ? (
         <p class="py-20 text-center text-forest-600">Galéria sa pripravuje.</p>
       ) : (
-        <div class="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
-          {fotky.map(([path, img]) => (
-            <figure class="reveal group overflow-hidden rounded-2xl bg-forest-100 shadow-sm break-inside-avoid">
-              <Image
-                src={img.default}
-                alt={popis(path)}
-                class="w-full object-cover transition duration-500 group-hover:scale-105"
-                widths={[480, 800, 1200]}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              />
-              <figcaption class="px-4 py-3 text-sm text-forest-700">{popis(path)}</figcaption>
-            </figure>
-          ))}
-        </div>
+        roky.map((r) => (
+          <div class="mb-14 last:mb-0">
+            <div class="reveal mb-6 flex items-center gap-4">
+              <h2 class="font-display text-3xl font-semibold text-forest-900">{r}</h2>
+              <span class="h-px flex-1 bg-cream-200" />
+            </div>
+            <div class="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+              {fotky
+                .filter(([path]) => rok(path) === r)
+                .map(([path, img]) => (
+                  <a
+                    href={img.default.src}
+                    class="foto-link reveal group block overflow-hidden rounded-2xl bg-forest-100 shadow-sm break-inside-avoid"
+                    data-popis={popis(path)}
+                  >
+                    <figure>
+                      <Image
+                        src={img.default}
+                        alt={popis(path)}
+                        class="w-full object-cover transition duration-500 group-hover:scale-105"
+                        widths={[480, 800, 1200]}
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      />
+                      <figcaption class="px-4 py-3 text-sm text-forest-700">{popis(path)}</figcaption>
+                    </figure>
+                  </a>
+                ))}
+            </div>
+          </div>
+        ))
       )
     }
   </section>
+
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[100] hidden flex-col items-center justify-center gap-3 bg-forest-950/95 p-4 backdrop-blur-sm sm:p-8"
+  >
+    <button
+      id="lightbox-zavriet"
+      class="absolute top-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-cream-50/10 text-2xl leading-none text-cream-50 transition hover:bg-cream-50/20"
+      aria-label="Zavrieť náhľad"
+    >
+      ×
+    </button>
+    <img id="lightbox-obrazok" class="max-h-[82vh] max-w-full rounded-xl shadow-2xl" alt="" />
+    <p id="lightbox-popis" class="text-center text-sm text-cream-50/90"></p>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox')!;
+    const obrazok = document.getElementById('lightbox-obrazok') as HTMLImageElement;
+    const popisEl = document.getElementById('lightbox-popis')!;
+
+    const otvorit = (src: string, popis: string) => {
+      obrazok.src = src;
+      obrazok.alt = popis;
+      popisEl.textContent = popis;
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const zavriet = () => {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      obrazok.src = '';
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll<HTMLAnchorElement>('a.foto-link').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        otvorit(link.href, link.dataset.popis ?? '');
+      });
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target !== obrazok) zavriet();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') zavriet();
+    });
+  </script>
 </Base>

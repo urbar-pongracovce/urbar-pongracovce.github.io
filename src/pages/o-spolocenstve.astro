@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import drevo from '../assets/foto/drevo.jpg';
+import vnutroLesa from '../assets/foto/vnutro-lesa.jpg';
+import panorama from '../assets/foto/panorama-chotara-duoton.jpg';
 
 const udaje = [
   ['Oficiálny názov', 'Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce'],
@@ -26,6 +27,7 @@ const udaje = [
   <PageHero
     title="O spoločenstve"
     subtitle="Sme spoločenstvom vlastníkov spoločnej nehnuteľnosti v katastri obce Pongrácovce. Hospodárime na lesoch a pasienkoch, ktoré naši predkovia spravovali po stáročia."
+    obrazok={panorama}
   />
 
   <section class="mx-auto grid max-w-6xl items-start gap-12 px-4 py-16 sm:px-6 lg:grid-cols-5 lg:py-24">
@@ -51,8 +53,8 @@ const udaje = [
         Levoča. Lesy dnes pokrývajú približne 45&nbsp;% katastra obce.
       </p>
       <p>
-        Urbárske spoločenstvá na Slovensku majú korene ešte v&nbsp;stredoveku — spoločné
-        užívanie lesov a&nbsp;pasienkov bolo po stáročia základom života spišských obcí.
+        Urbárske spoločenstvá — urbariáty — majú na Slovensku korene ešte v&nbsp;stredoveku;
+        spoločné užívanie lesov a&nbsp;pasienkov bolo po stáročia základom života spišských obcí.
         Po prerušení v&nbsp;časoch kolektivizácie sa urbárska tradícia obnovila a&nbsp;naše
         spoločenstvo na ňu oficiálne nadviazalo registráciou v&nbsp;apríli 2025.
       </p>
@@ -85,11 +87,12 @@ const udaje = [
     </div>
 
     <aside class="space-y-8 lg:col-span-2">
-      <div class="reveal overflow-hidden rounded-3xl shadow-xl">
+      <div class="reveal relative">
+        <div class="absolute -top-4 -left-4 h-full w-full rounded-3xl border-2 border-gold-400/40"></div>
         <Image
-          src={drevo}
-          alt="Hospodárenie v lese"
-          class="aspect-[4/3] w-full object-cover"
+          src={vnutroLesa}
+          alt="Vnútro nášho lesa"
+          class="relative aspect-[4/3] w-full rounded-3xl object-cover shadow-xl"
           widths={[480, 800, 1200]}
           sizes="(min-width: 1024px) 40vw, 100vw"
         />

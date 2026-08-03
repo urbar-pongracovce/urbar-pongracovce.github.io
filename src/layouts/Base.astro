@@ -12,13 +12,34 @@ interface Props {
 
 const {
   title,
-  description = 'Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce — spravujeme spoločné lesy a pasienky v katastri obce Pongrácovce, okres Levoča.',
+  description = 'Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce — urbariát obce Pongrácovce. Spravujeme spoločné lesy a pasienky v katastri obce, okres Levoča, Spiš.',
 } = Astro.props;
 
 const fullTitle =
   title === 'Domov'
     ? 'Urbár Pongrácovce — Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce'
     : `${title} · Urbár Pongrácovce`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce',
+  alternateName: 'Urbár Pongrácovce',
+  url: new URL('/', Astro.site).href,
+  logo: new URL('favicon-512.png', Astro.site).href,
+  image: new URL('og.jpg', Astro.site).href,
+  email: 'urbariat.pongracovce@proton.me',
+  telephone: '+421948131786',
+  foundingDate: '2025-04-23',
+  identifier: [{ '@type': 'PropertyValue', propertyID: 'IČO', value: '56940980' }],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Pongrácovce 30',
+    addressLocality: 'Pongrácovce',
+    postalCode: '053 05',
+    addressCountry: 'SK',
+  },
+};
 ---
 
 <!doctype html>
@@ -30,6 +51,12 @@ const fullTitle =
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0f1d15" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link
       rel="alternate"
@@ -43,6 +70,7 @@ const fullTitle =
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="sk_SK" />
     <meta property="og:image" content={new URL('og.jpg', Astro.site)} />
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <!-- Cloudflare Web Analytics -->
     <script
       is:inline
