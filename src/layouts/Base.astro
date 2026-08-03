@@ -20,6 +20,17 @@ const fullTitle =
     ? 'Urbár Pongrácovce — Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce'
     : `${title} · Urbár Pongrácovce`;
 
+const webSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Urbár Pongrácovce',
+  alternateName: [
+    'Urbárska spoločnosť pozemkové spoločenstvo Pongrácovce',
+    'Urbariát Pongrácovce',
+  ],
+  url: new URL('/', Astro.site).href,
+};
+
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -66,10 +77,12 @@ const orgSchema = {
     />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Urbár Pongrácovce" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="sk_SK" />
     <meta property="og:image" content={new URL('og.jpg', Astro.site)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <!-- Cloudflare Web Analytics -->
     <script
